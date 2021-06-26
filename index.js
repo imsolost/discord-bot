@@ -21,14 +21,10 @@ const boonBane = (string) => {
 
   strArr.forEach(el => {
     if (el === 'a') {
-      if ((Math.floor(Math.random() * 8) + 1) >= 5) {
-        counter++
-      }
+      if ((Math.floor(Math.random() * 8) + 1) >= 5) counter++
     }
     if (el === 'c') {
-      if ((Math.floor(Math.random() * 10) +1 >= 5)) {
-        counter--
-      }
+      if ((Math.floor(Math.random() * 10) +1 >= 5)) counter--
     }
   })
 
@@ -48,7 +44,13 @@ const rollCommand = (message) => {
   const roll = rollDice()
   if (!args[1]) message.channel.send(`**${roll}** \nYou rolled a ${roll}.`)
 
-  if (parseInt(args[args.length - 1]) >= roll) {
+  if (args[2] && (args[2].includes('a') || args[2].includes('c'))) {
+    if (parseInt(args[1]) >= roll) {
+      message.channel.send(`**Success!** \nYou rolled a ${roll}${boonBane(args[2])}.`)
+    } else if (parseInt(args[1]) < roll) {
+      message.channel.send(`**Failure!** \nYou rolled a ${roll}${boonBane(args[2])}.`)
+    }
+  } else if (parseInt(args[args.length - 1]) >= roll) {
     message.channel.send(`**Success!** \nYou rolled a ${roll}${boonBane(args[1])}.`)
   } else if (parseInt(args[args.length - 1]) < roll) {
     message.channel.send(`**Failure!** \nYou rolled a ${roll}${boonBane(args[1])}.`)
