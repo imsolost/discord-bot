@@ -1,6 +1,5 @@
 require('dotenv').config()
 const discord = require('discord.js')
-const _ = require('lodash')
 
 const client = new discord.Client()
 const IDENTIFIER = process.env.IDENTIFIER
@@ -11,7 +10,7 @@ client.on('ready', () => {
   console.log(`${client.user.tag} has logged in`)
 })
 
-const isValidCommand = (message, commandName) => message.content.toLowerCase().startsWith(IDENTIFIER + commandName)
+const isValidCmd = (message, cmdName) => message.content.toLowerCase().startsWith(IDENTIFIER + cmdName)
 
 const rollDice = () => Math.floor(Math.random() * 100) + 1
 
@@ -20,12 +19,8 @@ const boonBane = (string) => {
   let counter = 0
 
   strArr.forEach(el => {
-    if (el === 'a') {
-      if ((Math.floor(Math.random() * 8) + 1) >= 5) counter++
-    }
-    if (el === 'c') {
-      if ((Math.floor(Math.random() * 10) +1 >= 5)) counter--
-    }
+    if (el === 'a') if ((Math.floor(Math.random() * 8) + 1) >= 5) counter++
+    if (el === 'c') if ((Math.floor(Math.random() * 10) +1 >= 5)) counter--
   })
 
   if (counter > 0) {
@@ -62,7 +57,7 @@ const rollCommand = (message) => {
 client.on('message', (message) => {
   if (!message.content.startsWith(IDENTIFIER) || message.author.bot) return
 
-  if (isValidCommand(message, 'r')) {
+  if (isValidCmd(message, 'r')) {
     rollCommand(message)
   }
 })
